@@ -2,7 +2,7 @@
 
 Complete 6D phase-space catalog of Milky Way stars from Gaia DR3, combining astrometry, radial velocities, and photo-geometric distances.
 
-**Author:** Vasily Belokurov
+**Authors:** Vasily Belokurov, Alice Archer, Adam Dillamore, Hanyuan Zhang
 **Date:** 2025-10-19
 
 ---
@@ -268,11 +268,18 @@ gc_frame = coord.Galactocentric(
 
 ---
 
+## Authors
+
+- **Vasily Belokurov** (vasily@ast.cam.ac.uk) – Institute of Astronomy, University of Cambridge
+- **Alice Archer** (aeaa2@cam.ac.uk) – Institute of Astronomy, University of Cambridge
+- **Adam Dillamore** (a.dillamore@ucl.ac.uk) – University College London
+- **Hanyuan Zhang** (hz420@cam.ac.uk) – Institute of Astronomy, University of Cambridge
+
+---
+
 ## Contact
 
-For questions about this code:
-- Vasily Belokurov (vasily@ast.cam.ac.uk)
-- Institute of Astronomy, University of Cambridge
+For questions about this code, contact Vasily Belokurov (vasily@ast.cam.ac.uk)
 
 ---
 
