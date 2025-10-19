@@ -108,7 +108,6 @@ Query Gaia DR3 + Bailer-Jones distances via WSDB using `sqlutilpy`.
 
 **Usage:**
 ```bash
-source ~/Work/venvs/.venv/bin/activate
 python build_gaia_6d_sample.py
 ```
 
@@ -199,7 +198,13 @@ Run cells sequentially in Jupyter notebook.
 - **Median parallax S/N:** 32
 
 ### GS/E Phase-Space Folds (Figure 3)
-- **2.9M stars** in GS/E angular momentum range
+- **2.95M stars** in GS/E angular momentum range (|L_z| < 700 kpc km/s)
+  - Prograde (L_z > 0): 428,725 stars
+  - Retrograde (L_z < 0): 2,525,256 stars
+- **292,504 stars** after quality cuts (9.9% retention)
+  - Cuts: d_helio < 15 kpc, distance S/N > 3, parallax S/N > 10, E(B-V) < 100
+  - Prograde: 59,195 stars
+  - Retrograde: 233,309 stars
 - **5 chevron patterns** detected in (v_r, r) space
 - Prograde/retrograde asymmetry confirms dynamical complexity
 - Background subtraction reveals incomplete phase-mixing
@@ -218,11 +223,6 @@ Run cells sequentially in Jupyter notebook.
 **Data requirements:**
 - Access to WSDB (Institute of Astronomy, Cambridge)
 - Vasiliev+2021 GC membership catalog: `~/data/catalogues/gc_members_gaia_vasiliev.fits`
-
-**Environment:**
-```bash
-source ~/Work/venvs/.venv/bin/activate
-```
 
 ---
 
