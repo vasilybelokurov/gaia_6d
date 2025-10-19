@@ -44,6 +44,21 @@ gaia_6d/
 
 ## Data Products
 
+### Download Links
+
+The full data catalogs are available for download:
+
+**https://people.ast.cam.ac.uk/~vasily/data/gaia/dr3/**
+
+- `gaia_dr3_6d_full.fits` (5.9 GB)
+- `gaia_dr3_6d_galactocentric.fits` (4.5 GB)
+
+Place downloaded files in `~/data/gaia/` to use with the scripts.
+
+---
+
+### Catalog Descriptions
+
 All catalogs saved to `~/data/gaia/`:
 
 ### 1. `gaia_dr3_6d_full.fits` (5.9 GB)
