@@ -1,0 +1,48 @@
+# Data files (too large for git)
+*.fits
+*.dat
+*.csv
+*.hdf5
+
+# Plots (can be regenerated)
+plots/*.png
+plots/*.pdf
+plots/*.jpg
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+# Environment
+.env
+.venv
+venv/
+ENV/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Papers (copyrighted)
+papers/
+
+# Keep plot directory structure but ignore contents
+!plots/.gitkeep
