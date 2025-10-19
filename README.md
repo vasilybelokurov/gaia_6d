@@ -46,14 +46,19 @@ gaia_6d/
 
 ### Download Links
 
-The full data catalogs are available for download:
+The Galactocentric catalog is available for download:
 
 **https://people.ast.cam.ac.uk/~vasily/data/gaia/dr3/**
 
-- `gaia_dr3_6d_full.fits` (5.9 GB)
-- `gaia_dr3_6d_galactocentric.fits` (4.5 GB)
+- `gaia_dr3_6d_galactocentric.fits` (4.5 GB) - 33.6M stars with full 6D + Galactocentric coords
+
+Also available at the same location:
+- `gc_members_gaia_vasiliev.fits` (212 MB) - Vasiliev+2021 GC membership catalog
+- `RRL_GDR3.fits` (442 MB) - Gaia DR3 RR Lyrae
 
 Place downloaded files in `~/data/gaia/` to use with the scripts.
+
+**Note:** `gaia_dr3_6d_full.fits` (5.9 GB) is not publicly hosted due to size. Build it locally using `build_gaia_6d_sample.py` if needed.
 
 ---
 
