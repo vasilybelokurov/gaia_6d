@@ -4,11 +4,6 @@
 *.csv
 *.hdf5
 
-# Plots (can be regenerated)
-plots/*.png
-plots/*.pdf
-plots/*.jpg
-
 # Python
 __pycache__/
 *.py[cod]
@@ -40,9 +35,3 @@ ENV/
 *.swp
 *.swo
 *~
-
-# Papers (copyrighted)
-papers/
-
-# Keep plot directory structure but ignore contents
-!plots/.gitkeep
