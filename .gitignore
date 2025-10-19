@@ -35,3 +35,6 @@ ENV/
 *.swp
 *.swo
 *~
+
+# Project-specific workflow files
+CLAUDE.md
