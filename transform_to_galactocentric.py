@@ -97,6 +97,17 @@ def transform_to_galactocentric(input_file, output_file):
     VY = c_gal.v_y.to_value(u.km/u.s)
     VZ = c_gal.v_z.to_value(u.km/u.s)
 
+    # Compute cylindrical coordinates
+    # Convention: phi = 0 toward the Sun, increasing in prograde direction
+    R_cyl = np.sqrt(X**2 + Y**2)
+    phi = np.arctan2(Y, -X)  # phi=0 toward Sun (negative X), prograde = increasing phi
+
+    # Cylindrical velocities
+    # V_R: radial velocity (positive outward)
+    # V_phi: azimuthal velocity (positive prograde, i.e., direction of Galactic rotation)
+    V_R = (X * VX + Y * VY) / R_cyl
+    V_phi = (Y * VX - X * VY) / R_cyl
+
     t_transform = time.time() - t0_transform
     print(f"  Transformation complete in {t_transform:.1f}s ({n_6d/t_transform:.0f} stars/s)")
 
@@ -134,13 +145,20 @@ def transform_to_galactocentric(input_file, output_file):
     out_cat['rv'] = cat_6d['radial_velocity']
     out_cat['rv_error'] = cat_6d['radial_velocity_error']
 
-    # Galactocentric coordinates
+    # Galactocentric Cartesian coordinates
     out_cat['X'] = X
     out_cat['Y'] = Y
     out_cat['Z'] = Z
     out_cat['VX'] = VX
     out_cat['VY'] = VY
     out_cat['VZ'] = VZ
+
+    # Galactocentric cylindrical coordinates
+    # phi = 0 toward Sun, increasing prograde; V_phi > 0 for prograde rotation
+    out_cat['R_cyl'] = R_cyl
+    out_cat['phi'] = phi
+    out_cat['V_R'] = V_R
+    out_cat['V_phi'] = V_phi
 
     # Quality flags
     out_cat['ruwe'] = cat_6d['ruwe']
@@ -165,6 +183,10 @@ def transform_to_galactocentric(input_file, output_file):
     out_cat['VX'].unit = u.km/u.s
     out_cat['VY'].unit = u.km/u.s
     out_cat['VZ'].unit = u.km/u.s
+    out_cat['R_cyl'].unit = u.kpc
+    out_cat['phi'].unit = u.rad
+    out_cat['V_R'].unit = u.km/u.s
+    out_cat['V_phi'].unit = u.km/u.s
 
     print(f"  Output catalog: {len(out_cat.colnames)} columns, {len(out_cat):,} rows")
 
@@ -172,7 +194,7 @@ def transform_to_galactocentric(input_file, output_file):
     # Print statistics
     # ========================================================================
 
-    print("\n=== Galactocentric Statistics ===")
+    print("\n=== Galactocentric Statistics (Cartesian) ===")
     print(f"X range: {np.min(X):.2f} to {np.max(X):.2f} kpc")
     print(f"Y range: {np.min(Y):.2f} to {np.max(Y):.2f} kpc")
     print(f"Z range: {np.min(Z):.2f} to {np.max(Z):.2f} kpc")
@@ -180,8 +202,12 @@ def transform_to_galactocentric(input_file, output_file):
     print(f"VY range: {np.min(VY):.1f} to {np.max(VY):.1f} km/s")
     print(f"VZ range: {np.min(VZ):.1f} to {np.max(VZ):.1f} km/s")
 
-    R_gal = np.sqrt(X**2 + Y**2)
-    print(f"\nGalactocentric radius: {np.min(R_gal):.2f} to {np.max(R_gal):.2f} kpc")
+    print("\n=== Galactocentric Statistics (Cylindrical) ===")
+    print(f"R_cyl range: {np.min(R_cyl):.2f} to {np.max(R_cyl):.2f} kpc")
+    print(f"phi range: {np.min(phi):.2f} to {np.max(phi):.2f} rad")
+    print(f"V_R range: {np.min(V_R):.1f} to {np.max(V_R):.1f} km/s")
+    print(f"V_phi range: {np.min(V_phi):.1f} to {np.max(V_phi):.1f} km/s")
+    print(f"  (V_phi > 0 = prograde; median = {np.median(V_phi):.1f} km/s)")
     print(f"Height |Z|: {np.min(np.abs(Z)):.2f} to {np.max(np.abs(Z)):.2f} kpc")
 
     # ========================================================================
