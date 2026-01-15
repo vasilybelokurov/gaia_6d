@@ -30,6 +30,8 @@ gaia_6d/
 ├── sanity_test_vphi_vr.py            # V_phi vs V_R diagnostic plot
 │
 ├── figure3_phase_space_folds.ipynb   # Reproduce Energy Wrinkles Fig. 3
+├── figure3_phi_bins.py               # Phase-space folds by azimuthal angle
+├── plot_phi_histogram.py             # Azimuthal angle distribution
 │
 ├── papers/                            # Reference papers
 │   └── Energy_wrinkles_and_phase_space_folds_Resubmit/
@@ -37,7 +39,9 @@ gaia_6d/
 │
 └── plots/                             # Output figures
     ├── vphi_vr_density.png           # Sanity test: disk rotation
-    └── figure3_phase_space_folds.png # GS/E phase-space chevrons
+    ├── figure3_phase_space_folds.png # GS/E phase-space chevrons
+    ├── phi_histogram.png             # Azimuthal angle distribution
+    └── phi_bins/                      # Chevrons by phi bin (40 deg)
 ```
 
 ---
@@ -85,11 +89,16 @@ All catalogs saved to `~/data/gaia/`:
 ### 2. `gaia_dr3_6d_galactocentric.fits` (4.5 GB)
 **33,581,727 stars** (99.3%) with full 6D kinematics
 
-**Columns (22):**
+**Columns (26):**
 - Identifier: `source_id`
 - Observables: `ra`, `dec`, `parallax`, `pmra`, `pmdec`, `distance` (pc), `rv` + errors
 - Galactocentric Cartesian: `X`, `Y`, `Z` (kpc), `VX`, `VY`, `VZ` (km/s)
+- Galactocentric Cylindrical: `R_cyl` (kpc), `phi` (rad), `V_R`, `V_phi` (km/s)
 - Quality: `ruwe`, `ebv`
+
+**Cylindrical coordinate convention:**
+- `phi = 0` toward the Sun, increasing in prograde direction
+- `V_phi > 0` for prograde rotation (median ≈ 220 km/s for disk stars)
 
 **Galactocentric frame:**
 - Astropy default (R☉ = 8.122 kpc, Z☉ = 20.8 pc, v☉ from Schönrich+ 2010)
@@ -122,7 +131,7 @@ python build_gaia_6d_sample.py
 
 ### 2. `transform_to_galactocentric.py`
 
-Transform Gaia observables → Galactocentric Cartesian coordinates.
+Transform Gaia observables → Galactocentric coordinates (Cartesian + cylindrical).
 
 **Input:** `gaia_dr3_6d_full.fits`
 **Output:** `gaia_dr3_6d_galactocentric.fits`
@@ -137,7 +146,8 @@ python transform_to_galactocentric.py
 **Features:**
 - Filters stars with complete 6D data
 - Uses `astropy.coordinates` for transformation
-- Saves reduced catalog (observables + Galactocentric coords + quality)
+- Computes Cartesian (X, Y, Z, VX, VY, VZ) and cylindrical (R_cyl, phi, V_R, V_phi)
+- Cylindrical convention: phi=0 toward Sun, V_phi>0 prograde
 
 ---
 
@@ -185,6 +195,41 @@ Jupyter notebook reproducing Figure 3 from Belokurov et al. (2022).
 
 **Usage:**
 Run cells sequentially in Jupyter notebook.
+
+---
+
+### 5. `plot_phi_histogram.py`
+
+Diagnostic plot of Galactocentric azimuthal angle distribution.
+
+**Output:** `plots/phi_histogram.png`
+
+**Usage:**
+```bash
+python plot_phi_histogram.py
+```
+
+Shows strong concentration at phi ≈ 0 (toward Sun) due to RVS magnitude limit.
+
+---
+
+### 6. `figure3_phi_bins.py`
+
+Phase-space folds split by azimuthal angle (40° bins starting at φ = −20°).
+
+**Output:** `plots/phi_bins/figure3_phi_*.png`
+
+**Usage:**
+```bash
+python figure3_phi_bins.py
+```
+
+**Results:** Only 3 of 9 bins populated due to RVS magnitude-limit geometry:
+- φ ∈ [−20°, +20°]: 236k stars (strongest signal)
+- φ ∈ [+20°, +60°]: 24k stars
+- φ ∈ [−60°, −20°]: 31k stars
+
+Stars at |φ| > 60° are too distant for RVS (median d > 8 kpc).
 
 ---
 
